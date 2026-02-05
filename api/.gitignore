@@ -52,4 +52,4 @@
 /.web-server-pid
 
 # Idea files
-*/.idea/*
+/.idea/
