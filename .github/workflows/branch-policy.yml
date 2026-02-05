@@ -1,0 +1,31 @@
+name: Branch policy
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  check-branch-policy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check merge policy
+        run: |
+          BASE="${{ github.event.pull_request.base.ref }}"
+          HEAD="${{ github.event.pull_request.head.ref }}"
+
+          echo "Base branch: $BASE"
+          echo "Head branch: $HEAD"
+
+          if [ "$BASE" = "main" ] && [ "$HEAD" != "develop" ]; then
+            echo "❌ Only 'develop' can be merged into 'main'"
+            exit 1
+          fi
+
+          if [ "$BASE" = "develop" ]; then
+            if [[ ! "$HEAD" =~ ^(feature|fix)/.+$ ]]; then
+              echo "❌ Only feature/* or fix/* can be merged into 'develop'"
+              exit 1
+            fi
+          fi
+
+          echo "✅ Branch policy respected"
