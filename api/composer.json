@@ -15,6 +15,10 @@
         "symfony/yaml": "8.0.*"
     },
     "require-dev": {
+        "phpmetrics/phpmetrics": "^2.9",
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^11.0",
+        "squizlabs/php_codesniffer": "^4.0"
     },
     "config": {
         "allow-plugins": {
