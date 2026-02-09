@@ -34,7 +34,8 @@
         "phpmetrics/phpmetrics": "^2.9",
         "phpstan/phpstan": "^2.1",
         "phpunit/phpunit": "^11.0",
-        "squizlabs/php_codesniffer": "^4.0"
+        "squizlabs/php_codesniffer": "^4.0",
+        "symfony/maker-bundle": "^1.65"
     },
     "config": {
         "allow-plugins": {
@@ -87,8 +88,5 @@
             "allow-contrib": false,
             "require": "8.0.*"
         }
-    },
-    "require-dev": {
-        "symfony/maker-bundle": "^1.65"
     }
 }
