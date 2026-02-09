@@ -5,3 +5,5 @@ parameters:
   excludePaths:
     - var
     - vendor
+includes:
+  - vendor/phpstan/phpstan-doctrine/extension.neon

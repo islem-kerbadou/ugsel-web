@@ -33,6 +33,7 @@
     "require-dev": {
         "phpmetrics/phpmetrics": "^2.9",
         "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-doctrine": "^2.0",
         "phpunit/phpunit": "^11.0",
         "squizlabs/php_codesniffer": "^4.0",
         "symfony/maker-bundle": "^1.65"
