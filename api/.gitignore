@@ -53,3 +53,9 @@
 
 # Idea files
 /.idea/
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpunit/phpunit ###
+
+/.env.*
