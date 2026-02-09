@@ -57,11 +57,13 @@
 /.phpunit.cache/
 ###< phpunit/phpunit ###
 
-/.env.*
-
 ###> squizlabs/php_codesniffer ###
 /.phpcs-cache
 ###< squizlabs/php_codesniffer ###
 
 /phpmetrics.json
 /phpmetrics-report/
+
+# Env files
+.env.local
+.env.*.local
