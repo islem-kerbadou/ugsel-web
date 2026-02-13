@@ -4,7 +4,7 @@ namespace App\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class SportApiTest extends WebTestCase
+class SportTypeApiTest extends WebTestCase
 {
     protected static function getKernelClass(): string
     {
