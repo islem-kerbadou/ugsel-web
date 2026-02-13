@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\SportRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SportRepository::class)]
@@ -18,9 +20,16 @@ class Sport
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?SportType $sportType = null;
+    /**
+     * @var Collection<int, SportType>
+     */
+    #[ORM\ManyToMany(targetEntity: SportType::class)]
+    private Collection $sportType;
+
+    public function __construct()
+    {
+        $this->sportType = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -39,14 +48,23 @@ class Sport
         return $this;
     }
 
-    public function getSportType(): ?SportType
+    public function getSportType(): ?Collection
     {
         return $this->sportType;
     }
 
-    public function setSportType(?SportType $sport_type): static
+    public function addSportType(SportType $sportType): static
     {
-        $this->sportType = $sport_type;
+        if (!$this->sportType->contains($sportType)) {
+            $this->sportType->add($sportType);
+        }
+
+        return $this;
+    }
+
+    public function removeSportType(SportType $sportType): static
+    {
+        $this->sportType->removeElement($sportType);
 
         return $this;
     }
