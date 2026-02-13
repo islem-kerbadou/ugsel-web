@@ -29,26 +29,16 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ChampionshipRepository;
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Classe Championship
  *
- * Représente un championnat dans le domaine métier de l’application.
+ * Entité représentant un championnat dans le système applicatif.
+ * Persistée via Doctrine ORM et exposée comme ressource API via API Platform.
  *
- * Cette entité est :
- * - Persistée en base de données via Doctrine ORM.
- * - Exposée automatiquement comme ressource API grâce à API Platform.
- *
- * Responsabilités principales :
- * - Modéliser un championnat identifiable.
- * - Garantir l’intégrité des données persistées (identifiant primaire auto-généré).
- * - Fournir une interface d’accès (getters/setters) conforme aux standards
- *   Doctrine et aux bonnes pratiques orientées objet.
- *
- * Intégration technique :
- * - L’attribut `#[ORM\Entity]` indique que la classe est une entité Doctrine.
- * - Le paramètre `repositoryClass` associe l’entité à `ChampionshipRepository`.
- * - L’attribut `#[ApiResource]` permet l’exposition automatique via API Platform.
+ * Responsabilités :
+ * - Identifier un championnat de manière unique.
+ * - Garantir l’intégrité des données (ID auto-généré).
+ * - Fournir des getters/setters conformes aux standards Doctrine.
  *
  * @category  Entity
  * @package   App\Entity
@@ -57,6 +47,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @version   Release: 1.0.0
  * @since     2025-02-13
  */
+
 #[ORM\Entity(repositoryClass: ChampionshipRepository::class)]
 #[ApiResource]
 class Championship

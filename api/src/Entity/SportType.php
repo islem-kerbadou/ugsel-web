@@ -33,26 +33,13 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Classe SportType
  *
- * Représente une catégorie ou typologie de sport.
+ * Entité représentant un type ou une catégorie de sport dans le système applicatif.
+ * Persistée via Doctrine ORM et exposée comme ressource API via API Platform.
  *
- * Responsabilités fonctionnelles :
- * - Définir une classification normalisée des sports.
- * - Garantir l’unicité d’un code métier.
+ * Responsabilités :
+ * - Définir un code métier unique pour chaque type de sport.
  * - Fournir un libellé descriptif optionnel.
- *
- * Intégration technique :
- * - `#[ORM\Entity]` indique que la classe est persistée par Doctrine.
- * - `repositoryClass` référence `SportTypeRepository`.
- * - `#[ApiResource]` permet l’exposition automatique via API Platform.
- *
- * Contraintes de modélisation :
- * - Le champ `code` est unique en base de données.
- * - Le champ `label` est optionnel (nullable).
- *
- * Architecture :
- * Cette entité agit comme table de référence (lookup table)
- * dans le modèle relationnel et favorise la normalisation
- * des données métier.
+ * - Servir de référence pour l’association avec les entités `Sport`.
  *
  * @category  Entity
  * @package   App\Entity
@@ -61,6 +48,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @version   Release: 1.0.0
  * @since     2025-02-13
  */
+
 #[ORM\Entity(repositoryClass: SportTypeRepository::class)]
 #[ApiResource]
 class SportType

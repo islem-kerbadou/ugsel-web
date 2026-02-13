@@ -32,24 +32,13 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Classe Competition
  *
- * Représente une compétition dans le domaine métier de l’application.
+ * Entité représentant une compétition dans le système applicatif.
+ * Persistée via Doctrine ORM et exposée comme ressource API via API Platform.
  *
- * Responsabilités fonctionnelles :
- * - Modéliser une entité métier correspondant à une compétition.
- * - Assurer la persistance des données via Doctrine ORM.
- * - Permettre l’exposition automatique des opérations CRUD via API Platform.
- *
- * Intégration technique :
- * - L’attribut `#[ORM\Entity]` déclare cette classe comme entité Doctrine.
- * - Le paramètre `repositoryClass` référence `CompetitionRepository`
- *   pour les opérations de requêtage personnalisées.
- * - L’attribut `#[ApiResource]` active l’exposition automatique
- *   en tant que ressource REST.
- *
- * Architecture :
- * Cette entité appartient à la couche Domaine/Infrastructure (Entity)
- * et constitue une représentation persistante du concept métier
- * de compétition.
+ * Responsabilités :
+ * - Identifier une compétition de manière unique.
+ * - Garantir l’intégrité des données (ID auto-généré).
+ * - Fournir des getters/setters conformes aux standards Doctrine.
  *
  * @category  Entity
  * @package   App\Entity
@@ -58,6 +47,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @version   Release: 1.0.0
  * @since     2025-02-13
  */
+
 #[ORM\Entity(repositoryClass: CompetitionRepository::class)]
 #[ApiResource]
 class Competition
