@@ -1,0 +1,56 @@
+name: PHP Tests
+
+on:
+  push:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, intl, pdo, pdo_mysql
+          coverage: none
+
+      - name: Install dependencies
+        working-directory: api
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Run PHPStan
+        working-directory: api
+        run: vendor/bin/phpstan analyse
+
+      - name: Run PHP CodeSniffer
+        working-directory: api
+        run: vendor/bin/phpcs
+
+      - name: Run PHPUnit
+        working-directory: api
+        run: vendor/bin/phpunit
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq bc
+
+      - name: Run PHP Metrics (Maintainability Index check)
+        working-directory: api
+        run: |
+          vendor/bin/phpmetrics --report-json=phpmetrics.json src
+
+          MI=$(jq '[to_entries[] | select(.value._type=="Hal\\Metric\\ClassMetric") | .value.mi] | add / length' phpmetrics.json)
+
+          echo "Maintainability Index (average): $MI"
+
+          THRESHOLD=65
+
+          if (( $(echo "$MI < $THRESHOLD" | bc -l) )); then
+            echo "❌ Maintainability Index below threshold ($THRESHOLD)"
+            exit 1
+          else
+            echo "✅ Maintainability Index is acceptable"
+          fi
