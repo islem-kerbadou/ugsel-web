@@ -57,7 +57,7 @@ Niveau le plus fin, permet d'organiser un championnat au sein d'une compétition
 * **Linter & Analyse statique** :
     * **PHPStan** : Pour vérifier la logique du code PHP.
     * **CodeSniffer** : Pour assurer la conformité aux standards de code ("beauté" du code).
-* **Documentation** : Doxygen
+* **Documentation** : Doxygen (la documentation générée est disponible dans la branche `documentation` dans /documentation/html/index.html)
 
 ### Pourquoi ces choix ?
 * **Symfony** : Choisi pour sa scalabilité et robustesse adaptées à l'ampleur du projet.
