@@ -1,0 +1,5 @@
+<map id="App\Entity\Sport" name="App\Entity\Sport">
+<area shape="rect" id="Node000001" title=" " alt="" coords="19,96,137,123"/>
+<area shape="rect" id="Node000002" href="$class_app_1_1_entity_1_1_sport_type.html" title=" " alt="" coords="5,5,151,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,48,81,95,75,95,75,48"/>
+</map>

@@ -1,0 +1,31 @@
+\doxysection{Référence du fichier Sport.\+php}
+\hypertarget{_sport_8php}{}\label{_sport_8php}\index{Sport.php@{Sport.php}}
+
+
+Entité représentant un sport dans le système applicatif.  
+
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_app_1_1_entity_1_1_sport}{App\textbackslash{}\+Entity\textbackslash{}\+Sport}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Espaces de nommage}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_app}{App}}
+\item 
+namespace \mbox{\hyperlink{namespace_app_1_1_entity}{App\textbackslash{}\+Entity}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+Entité représentant un sport dans le système applicatif. 
+
+Ce fichier définit l\textquotesingle{}entité Doctrine {\ttfamily Sport}, exposée en tant que ressource API via API Platform. Elle modélise un sport identifiable par un identifiant unique, caractérisé par un nom et associé à un type de sport ({\ttfamily Sport\+Type}).
+
+Cette classe est persistée en base de données grâce à Doctrine ORM et automatiquement exposée sous forme d’\+API REST via API Platform.
+
+La relation avec {\ttfamily Sport\+Type} permet de structurer les sports selon une classification métier.
+
+PHP version 8.\+3 
