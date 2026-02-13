@@ -48,7 +48,10 @@ class Sport
         return $this;
     }
 
-    public function getSportType(): ?Collection
+    /**
+     * @return Collection<int, SportType>
+     */
+    public function getSportType(): Collection
     {
         return $this->sportType;
     }
@@ -68,4 +71,5 @@ class Sport
 
         return $this;
     }
+
 }
