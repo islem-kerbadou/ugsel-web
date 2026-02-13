@@ -48,7 +48,7 @@ jobs:
       - name: Run PHPUnit
         working-directory: api
         env:
-          DATABASE_URL: "pgsql://testuser:testpass@127.0.0.1:5432/test_db"
+          DATABASE_URL: "pgsql://testuser:testpass@127.0.0.1:5432/test_db?serverVersion=15"
         run: vendor/bin/phpunit
 
       - name: Install jq
