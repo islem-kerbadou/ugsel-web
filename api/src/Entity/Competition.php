@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CompetitionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CompetitionRepository::class)]
@@ -21,6 +23,22 @@ class Competition
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Sport $sport = null;
+
+    /**
+     * @var Collection<int, Championship>
+     */
+    #[ORM\OneToMany(
+        targetEntity: Championship::class,
+        mappedBy: "competition",
+        cascade: ['remove'],
+        orphanRemoval: true
+    )]
+    private Collection $championships;
+
+    public function __construct()
+    {
+        $this->championships = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -47,6 +65,35 @@ class Competition
     public function setSport(?Sport $sport): static
     {
         $this->sport = $sport;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Championship>
+     */
+    public function getChampionships(): Collection
+    {
+        return $this->championships;
+    }
+
+    public function addChampionship(Championship $championship): static
+    {
+        if (!$this->championships->contains($championship)) {
+            $this->championships->add($championship);
+            $championship->setCompetition($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChampionship(Championship $championship): static
+    {
+        if ($this->championships->removeElement($championship)) {
+            if ($championship->getCompetition() === $this) {
+                $championship->setCompetition(null);
+            }
+        }
 
         return $this;
     }

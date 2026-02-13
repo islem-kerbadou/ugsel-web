@@ -26,9 +26,16 @@ class Sport
     #[ORM\ManyToMany(targetEntity: SportType::class)]
     private Collection $sportType;
 
+    /**
+     * @var Collection<int, Competition>
+     */
+    #[ORM\OneToMany(targetEntity: Competition::class, mappedBy: "sport", cascade: ['remove'], orphanRemoval: true)]
+    private Collection $competitions;
+
     public function __construct()
     {
         $this->sportType = new ArrayCollection();
+        $this->competitions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -46,6 +53,14 @@ class Sport
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Competition>
+     */
+    public function getCompetitions(): Collection
+    {
+        return $this->competitions;
     }
 
     /**
