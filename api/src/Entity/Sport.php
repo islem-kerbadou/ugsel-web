@@ -26,6 +26,9 @@ class Sport
     #[ORM\ManyToMany(targetEntity: SportType::class)]
     private Collection $sportType;
 
+    #[ORM\OneToMany(targetEntity: Competition::class, mappedBy: "sport", cascade: ['remove'], orphanRemoval: true)]
+    private Collection $competitions;
+
     public function __construct()
     {
         $this->sportType = new ArrayCollection();
