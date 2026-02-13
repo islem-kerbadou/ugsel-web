@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { Sport } from '../../types';
-import { CompetitionList } from '../competitions/CompetitionList';
-import { Button } from '../common/Button';
+import React, {useState} from 'react';
+import {Sport} from '../../types';
+import {CompetitionList} from '../competitions/CompetitionList';
+import {Button} from '../common/Button';
 
 interface SportCardProps {
-  sport: Sport;
-  onDelete: (id: number) => void;
+    sport: Sport,
+    onDelete: (id: number) => void,
+    key?: number | undefined
 }
 
 export const SportCard: React.FC<SportCardProps> = ({ sport, onDelete }) => {

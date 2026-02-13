@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { Championship } from '../../types';
-import { Button } from '../common/Button';
+import React, {useState} from 'react';
+import {Championship} from '../../types';
+import {Button} from '../common/Button';
 
 interface ChampionshipCardProps {
-  championship: Championship;
-  onDelete: (id: number) => void;
+    championship: Championship,
+    onDelete: (id: number) => void,
+    key?: number | undefined
 }
 
 export const ChampionshipCard: React.FC<ChampionshipCardProps> = ({
