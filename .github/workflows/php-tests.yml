@@ -7,6 +7,21 @@ jobs:
   build-test:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+          POSTGRES_DB: test_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U testuser"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -15,7 +30,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
-          extensions: mbstring, intl, pdo, pdo_mysql
+          extensions: mbstring, intl, pdo, pdo_pgsql
           coverage: none
 
       - name: Install dependencies
@@ -32,6 +47,8 @@ jobs:
 
       - name: Run PHPUnit
         working-directory: api
+        env:
+          DATABASE_URL: "pgsql://testuser:testpass@127.0.0.1:5432/test_db"
         run: vendor/bin/phpunit
 
       - name: Install jq
