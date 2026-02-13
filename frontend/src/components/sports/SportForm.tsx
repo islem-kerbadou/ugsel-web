@@ -3,7 +3,6 @@ import { Input } from '../common/Input';
 import { Select } from '../common/Select';
 import { Button } from '../common/Button';
 import { ErrorMessage } from '../common/ErrorMessage';
-import { SportTypeForm } from '../sport-types/SportTypeForm';
 import { useSportTypes } from '../../hooks/useSportTypes';
 import { SportType } from '../../types';
 
@@ -18,12 +17,11 @@ export const SportForm: React.FC<SportFormProps> = ({
   onCancel,
   initialSportType,
 }) => {
-  const { sportTypes, loading: typesLoading, createSportType, refetch } = useSportTypes();
+  const { sportTypes, loading: typesLoading } = useSportTypes();
   const [name, setName] = useState('');
   const [selectedSportType, setSelectedSportType] = useState(initialSportType || '');
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
-  const [showSportTypeForm, setShowSportTypeForm] = useState(false);
 
   useEffect(() => {
     if (initialSportType) {
@@ -36,21 +34,6 @@ export const SportForm: React.FC<SportFormProps> = ({
       setSelectedSportType(`/api/sport_types/${sportTypes[0].id}`);
     }
   }, [sportTypes, selectedSportType]);
-
-  const handleCreateSportType = async (
-    code: string,
-    label: string,
-    types: ('individuel' | 'collectif')[]
-  ) => {
-    try {
-      const newSportType = await createSportType(code, label, types);
-      setSelectedSportType(`/api/sport_types/${newSportType.id}`);
-      setShowSportTypeForm(false);
-      await refetch();
-    } catch (err) {
-      throw err;
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -118,53 +101,20 @@ export const SportForm: React.FC<SportFormProps> = ({
 
                 {sportTypes.length === 0 ? (
                   <div className="alert alert-warning">
-                    <p className="mb-3">
+                    <p className="mb-0">
                       ⚠️ Aucun type de sport disponible. Veuillez créer un type de sport avant de créer un sport.
                     </p>
-                    {!showSportTypeForm && (
-                      <Button
-                        type="button"
-                        onClick={() => setShowSportTypeForm(true)}
-                        className="w-100"
-                      >
-                        + Créer un type de sport
-                      </Button>
-                    )}
                   </div>
                 ) : (
-                  <div className="d-flex gap-2 align-items-end">
-                    <div className="flex-grow-1">
-                      <Select
-                        label="Type de sport"
-                        value={selectedSportType}
-                        onChange={setSelectedSportType}
-                        options={getSportTypeOptions()}
-                        placeholder="Sélectionnez un type"
-                        required
-                        error={error && !selectedSportType ? 'Le type est requis' : undefined}
-                      />
-                    </div>
-                    {!showSportTypeForm && (
-                      <Button
-                        type="button"
-                        variant="secondary"
-                        onClick={() => setShowSportTypeForm(true)}
-                        className="mb-3"
-                      >
-                        + Ajouter
-                      </Button>
-                    )}
-                  </div>
-                )}
-
-                {showSportTypeForm && (
-                  <div className="mb-3">
-                    <SportTypeForm
-                      onSubmit={handleCreateSportType}
-                      onCancel={() => setShowSportTypeForm(false)}
-                      inline
-                    />
-                  </div>
+                  <Select
+                    label="Type de sport"
+                    value={selectedSportType}
+                    onChange={setSelectedSportType}
+                    options={getSportTypeOptions()}
+                    placeholder="Sélectionnez un type"
+                    required
+                    error={error && !selectedSportType ? 'Le type est requis' : undefined}
+                  />
                 )}
 
                 <div className="d-flex gap-2 justify-content-end">
