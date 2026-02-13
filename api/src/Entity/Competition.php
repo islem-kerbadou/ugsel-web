@@ -27,7 +27,8 @@ class Competition
     /**
      * @var Collection<int, Championship>
      */
-    #[ORM\OneToMany(targetEntity: Championship::class, mappedBy: "competition", cascade: ['remove'], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Championship::class, mappedBy: "competition",
+        cascade: ['remove'], orphanRemoval: true)]
     private Collection $championships;
 
     public function __construct()
