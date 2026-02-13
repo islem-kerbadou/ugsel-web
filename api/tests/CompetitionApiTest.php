@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class CompetitionApiTest extends WebTestCase
 {
-    
     protected static function getKernelClass(): string
     {
         return \App\Kernel::class;
@@ -15,16 +14,21 @@ class CompetitionApiTest extends WebTestCase
     public function testGetAllCompetitions(): void
     {
         $client = static::createClient();
-        $client->request('GET', '/api/competitions');
+        $client->request('GET', '/api/competitions.jsonld', [], [], [
+            'HTTP_ACCEPT' => 'application/ld+json'
+        ]);
 
         $this->assertResponseIsSuccessful();
         $this->assertJson($client->getResponse()->getContent());
     }
 
-    public function testCreateCompetitions(): void
+    public function testCreateCompetition(): void
     {
         $client = static::createClient();
-        $client->request('POST', '/api/competitions', [], [], ['CONTENT_TYPE' => 'application/ld+json'], json_encode([
+        $client->request('POST', '/api/competitions.jsonld', [], [], [
+            'CONTENT_TYPE' => 'application/ld+json',
+            'HTTP_ACCEPT' => 'application/ld+json'
+        ], json_encode([
             'name' => 'Competition 1',
         ]));
 
@@ -36,14 +40,22 @@ class CompetitionApiTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('POST', '/api/competitions', [], [], ['CONTENT_TYPE' => 'application/ld+json'], json_encode([
+        $client->request('POST', '/api/competitions.jsonld', [], [], [
+            'CONTENT_TYPE' => 'application/ld+json',
+            'HTTP_ACCEPT' => 'application/ld+json'
+        ], json_encode([
             'name' => 'Competition 2',
         ]));
 
+        $this->assertResponseStatusCodeSame(201);
         $data = json_decode($client->getResponse()->getContent(), true);
-        $id = $data['id'];
+        $this->assertArrayHasKey('@id', $data);
+        $iri = $data['@id'];
+        $id = basename($iri);
 
-        $client->request('GET', "/api/competitions/$id");
+        $client->request('GET', "/api/competitions/$id.jsonld", [], [], [
+            'HTTP_ACCEPT' => 'application/ld+json'
+        ]);
 
         $this->assertResponseIsSuccessful();
         $this->assertJson($client->getResponse()->getContent());
@@ -53,34 +65,51 @@ class CompetitionApiTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('POST', '/api/competitions', [], [], ['CONTENT_TYPE' => 'application/ld+json'], json_encode([
+        $client->request('POST', '/api/competitions.jsonld', [], [], [
+            'CONTENT_TYPE' => 'application/ld+json',
+            'HTTP_ACCEPT' => 'application/ld+json'
+        ], json_encode([
             'name' => 'Competition 3',
         ]));
 
+        $this->assertResponseStatusCodeSame(201);
         $data = json_decode($client->getResponse()->getContent(), true);
-        $id = $data['id'];
+        $this->assertArrayHasKey('@id', $data);
+        $iri = $data['@id'];
+        $id = basename($iri);
 
-        $client->request('PATCH', "/api/competitions/$id", [], [], ['CONTENT_TYPE' => 'application/ld+json'], json_encode([
-            'name' => 'Competition 3 mis a jour',
+        $client->request('PATCH', "/api/competitions/$id.jsonld", [], [], [
+            'CONTENT_TYPE' => 'application/ld+json',
+            'HTTP_ACCEPT' => 'application/ld+json'
+        ], json_encode([
+            'name' => 'Competition 3 mis à jour',
         ]));
 
         $this->assertResponseIsSuccessful();
         $updated = json_decode($client->getResponse()->getContent(), true);
-        $this->assertEquals('Competition 3 mis a jour', $updated['name']);
+        $this->assertEquals('Competition 3 mis à jour', $updated['name']);
     }
 
     public function testDeleteCompetition(): void
     {
         $client = static::createClient();
 
-        $client->request('POST', '/api/competitions', [], [], ['CONTENT_TYPE' => 'application/ld+json'], json_encode([
+        $client->request('POST', '/api/competitions.jsonld', [], [], [
+            'CONTENT_TYPE' => 'application/ld+json',
+            'HTTP_ACCEPT' => 'application/ld+json'
+        ], json_encode([
             'name' => 'Competition 4',
         ]));
 
+        $this->assertResponseStatusCodeSame(201);
         $data = json_decode($client->getResponse()->getContent(), true);
-        $id = $data['id'];
+        $this->assertArrayHasKey('@id', $data);
+        $iri = $data['@id'];
+        $id = basename($iri);
 
-        $client->request('DELETE', "/api/competitions/$id");
+        $client->request('DELETE', "/api/competitions/$id.jsonld", [], [], [
+            'HTTP_ACCEPT' => 'application/ld+json'
+        ]);
 
         $this->assertResponseStatusCodeSame(204);
     }
